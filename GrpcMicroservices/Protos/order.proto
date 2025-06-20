@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcMicroservices.Protos";
+
+import "google/protobuf/empty.proto";
+
+package order;
+
+message Order {
+  string id = 1;
+  string product_id = 2;
+  int32 quantity = 3;
+  double total_price = 4;
+}
+
+message CreateOrderRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message OrderListResponse {
+  repeated Order orders = 1;
+}
+
+message GetOrderRequest {
+  string id = 1;
+}
+
+service OrderProtoService {
+  rpc CreateOrder(CreateOrderRequest) returns (Order);
+  rpc GetOrder(GetOrderRequest) returns (Order);
+  rpc GetAllOrders(google.protobuf.Empty) returns (OrderListResponse);
+}
